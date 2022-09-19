@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madison Mareno Leaflet with </title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+    integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+    integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+    crossorigin=""></script>
+    <script src="mydatapointsqgis.js"></script>
+
+</head>
+<style>
+    #map{
+        width:100%;
+        height:500px;
+    }
+</style>
+<body>
+    <h2>Earthquakes from 2012-2022 in the Continential US and Nearby Areas</h2>
+    <br>
+    <!-- COMMENTED LINES WORK FOR POLYGON DATA
+        <button onclick='geojson.setStyle({color: getRandomColor})'>Click me!</button> -->
+    <div id= "map"></div>
+    <script>
+    var map = L.map('map').setView([40.871336822819465, -98.92117121271882], 4);
+    
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap'
+    }).addTo(map);
+    
+    // var myStyle = {
+    //     "color": "#ff7800",
+    //     "weight": 5,
+    //     "opacity": 0.65
+    // };
+
+    // var geojson = L.geoJSON(quake, {style: myStyle}).addTo(map);
+
+
+
+    var eIcon = L.icon({
+    iconUrl: 'icon.png',
+    iconSize:     [20, 20], // size of the icon
+    iconAnchor:   [0, 0], // point of the icon which will correspond to marker's location
+    });
+    
+    var geojson = L.geoJSON(quake, {
+        pointToLayer: function(feature, latlng){
+            return L.marker(latlng, {icon: eIcon})
+        }
+    }).addTo(map);
+    // function getRandomColor() {
+    //     var letters = '0123456789ABCDEF';
+    //     var color = '#';
+    //     for (var i = 0; i < 6; i++) {
+    //     color += letters[Math.floor(Math.random() * 16)];
+    //     }
+    //     return color;
+
+    
+    </script>
+
+</body>
+</html>
